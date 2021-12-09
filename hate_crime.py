@@ -83,3 +83,45 @@ def str_to_date(date_string: str) -> datetime.date:
     integer_date = [int(num) for num in date_string_split]
 
     return datetime.date(integer_date[0], integer_date[1], integer_date[2])
+
+
+###############################################################################
+# Operating on the data
+###############################################################################
+def num_instances_by_month(data: List[HateCrime], state: str, year: int, month: int) -> int:
+    """Return the number of hate crime instances that occurred in the given state, month and year.
+
+    Preconditions:
+        - state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',\
+                    'IN', 'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT',\
+                    'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OK', 'OR', 'PA', 'RI', 'SC',\
+                    'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
+        - 1999 <= year <= 2020
+        - 1 <= month <= 12
+    """
+    num_of_instances = 0
+
+    for row in data:
+        if row.state_abbr == state and row.date.year == year and row.date.month == month:
+            num_of_instances += 1
+
+    return num_of_instances
+
+
+def num_instances_by_year(data: List[HateCrime], state: str, year: int) -> int:
+    """Return the number of hate crime instances that occurred in the given state and year.
+
+        Preconditions:
+            - state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',\
+                        'IN', 'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT',\
+                        'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OK', 'OR', 'PA', 'RI', 'SC',\
+                        'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
+            - 1999 <= year <= 2020
+    """
+    num_of_instances = 0
+
+    for row in data:
+        if row.state_abbr == state and row.date.year == year:
+            num_of_instances += 1
+
+    return num_of_instances
