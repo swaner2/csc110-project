@@ -62,10 +62,10 @@ def process_row(row: list[str]) -> CovidData:
     (year, month, day) = str.split(row[0], '-')
     date = datetime.date(int(year), int(month), int(day))
     state = row[1]
-    if row[19] == '':
+    if row[21] == '':
         cases = 0
     else:
-        cases = int(row[19])
+        cases = int(row[21])
     return CovidData(date, state, cases)
 
 def cases_by_month(covid_data: list[CovidData], month: int, state: str) -> CovidData:
