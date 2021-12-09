@@ -67,3 +67,32 @@ def process_row(row: list[str]) -> CovidData:
     else:
         cases = int(row[19])
     return CovidData(date, state, cases)
+
+def cases_by_month(covid_data: list[CovidData], month: int, state: str) -> CovidData:
+    """Take the dataclasses from the file and combine the cases from for each day to per month.
+
+    The whole month's total covid cases will be represented by the case count on the first day of the month.
+
+    """
+    date = datetime.date(2020, month, 1)
+    total_cases = 0
+    for row in covid_data:
+        if row.date.month == month and row.state == state:
+            total_cases += 1
+    return CovidData(date, state, total_cases)
+
+
+def processing_data(raw_covid_data: list[CovidData]) -> list[CovidData]:
+    """Take the data read from the file and compile it for monthly totals for each state."""
+
+    data_by_month = []
+    for state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
+                  'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA',
+                  'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY',
+                  'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX',
+                  'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'}:
+        for x in range(1, 13):
+            month_total = cases_by_month(raw_covid_data, x, state)
+            list.append(data_by_month, month_total)
+    return data_by_month
+
