@@ -30,7 +30,7 @@ class HateCrime:
                     'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OK', 'OR', 'PA', 'RI', 'SC',\
                     'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
 
-    Even though there are many more headers, it is not needed due to the
+    Even though there are many more headers, it is not needed in our project.
     """
     incident_id: int
     state_abbr: str
