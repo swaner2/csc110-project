@@ -3,7 +3,7 @@
 
 Module Description
 ==================
-This module contains covid to transform the raw data about covid cases in the United States into workable dataclasses.
+This module contains functions to transform the raw data about covid cases in the United States into workable dataclasses.
 
 """
 import csv
