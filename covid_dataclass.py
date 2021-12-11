@@ -46,7 +46,7 @@ def read_csv_file(filename: str) -> list[CovidData]:
     """
     with open(filename) as file:
         reader = csv.reader(file)
-        headers = next(reader)    # idk how to not count the first row
+        next(reader)
         data = []
         for row in reader:
             processed_row = process_row(row)
