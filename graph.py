@@ -264,7 +264,11 @@ def plot_covid_and_hate_crime(covid_data: list[CovidData], hate_crime_data: list
     Each point represents a different month in 2020.
 
     Preconditions:
-        - add?!
+        - state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', \
+                         'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', \
+                         'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', \
+                         'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', \
+                         'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'}
     """
     # Convert the outputs into parallel x and y lists
     _, x_data, y_data = get_xy_data(covid_data, hate_crime_data, state)
