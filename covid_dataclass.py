@@ -77,8 +77,8 @@ def cases_by_month(covid_data: list[CovidData], month: int, state: str) -> Covid
     date = datetime.date(2020, month, 1)
     total_cases = 0
     for row in covid_data:
-        if row.date.month == month and row.state == state:
-            total_cases += 1
+        if row.date.month == month and row.date.year == 2020 and row.state == state:
+            total_cases = total_cases + row.cases
     return CovidData(date, state, total_cases)
 
 
