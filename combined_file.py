@@ -285,22 +285,3 @@ def plot_covid_and_hate_crime(covid_data: list[CovidData], hate_crime_data: list
     # Is the above not working for you? Comment it out, and uncomment the following:
     # fig.write_html('my_figure.html')
     # You will need to manually open the my_figure.html file created above.
-
-#
-# if __name__ == '__main__':
-#     import python_ta
-#     import python_ta.contracts
-#     python_ta.contracts.DEBUG_CONTRACTS = False
-#     python_ta.contracts.check_all_contracts()
-#
-#     # When you are ready to check your work with python_ta, uncomment the following lines.
-#     # (Delete the "#" and space before each line.)
-#     # IMPORTANT: keep this code indented inside the "if __name__ == '__main__'" block
-#     python_ta.check_all(config={
-#         'allowed-io': ['load_data'],
-#         'extra-imports': ['python_ta.contracts', 'csv', 'plotly.graph_objects', 'a3_ffwi_system'],
-#         'max-line-length': 100,
-#         'max-args': 6,
-#         'max-locals': 25,
-#         'disable': ['R1705'],
-#     })
