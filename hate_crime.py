@@ -244,7 +244,7 @@ def plot_hate_crime_year(data: list[HateCrime], state: str) -> None:
     fig.add_trace(go.Scatter(x=x_data, y=y_data, name=state))
 
     fig.update_layout(title=f'Time Series of {state}',
-                      xaxis_title='(Year, Month)',
+                      xaxis_title='(Year)',
                       yaxis_title=f'Calculated {state}')
 
     fig.show()
