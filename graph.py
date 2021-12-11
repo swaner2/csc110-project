@@ -208,7 +208,7 @@ def cases_by_month(covid_data: list[CovidData], month: int, state: str) -> Covid
     total_cases = 0
     for row in covid_data:
         if row.date.month == month and row.state == state:
-            total_cases += 1
+            total_cases = total_cases + row.cases
     return CovidData(date, state, total_cases)
 
 
@@ -249,9 +249,7 @@ def get_xy_data(covid_data: list[CovidData], hate_crime_data: list[HateCrime], s
     dates = []
     covid_nums = []
     hate_crimes = []
-    covid_data_by_month = []
-    for month in range(1, 13):
-        list.append(covid_data_by_month, cases_by_month(covid_data, month, state))
+    covid_data_by_month = processing_data(covid_data)
     for x in covid_data_by_month:
         if x.state == state:
             date = (x.date.month, 2020)
