@@ -271,7 +271,7 @@ def plot_covid_and_hate_crime(covid_data: list[CovidData], hate_crime_data: list
 
     # Create the figure
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=x_data, y=y_data, name=state))
+    fig = go.Figure(data=go.Scatter(x=x_data, y=y_data, mode='markers'))
 
     # Configure the figure
     fig.update_layout(title=f'The Correlation Between Covid Rates and Hate Crime in {state}',
