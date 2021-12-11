@@ -128,6 +128,48 @@ def num_instances_by_year(data: List[HateCrime], state: str, year: int) -> int:
     return num_of_instances
 
 
+def predictions(data: List[HateCrime]) -> dict[str, int]:
+    """Takes hate crime data and returns a dictionary with the predicted number of hate crime
+    incidents in 2020 per state"""
+    states = {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
+              'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV',
+              'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX',
+              'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
+
+    hate_crime_2020_predictions = {}
+
+    for state in states:
+        slope = find_best_slope(data, state, 1999, 2019)
+        prediction = slope * num_instances_by_year(data, state, 2020) + \
+            num_instances_by_year(data, state, 1999)
+        hate_crime_2020_predictions[state] = prediction
+
+    return hate_crime_2020_predictions
+
+
+def find_best_slope(data: List[HateCrime], state: str, start_year: int, end_year: int) -> int:
+    """Finds best slope of the hate crime trend to use for predicting the number of incidents"""
+    start_incidents = num_instances_by_year(data, state, start_year)
+    end_incidents = num_instances_by_year(data, state, end_year)
+
+    slope = (end_incidents - start_incidents) // (end_year - start_year)
+
+    middle_year = (end_year - start_year) // 2
+    middle_incidents = num_instances_by_year(data, state, middle_year)
+
+    adjusted_slope = (end_incidents - middle_incidents) // (end_year - middle_year)
+
+    while abs(slope - adjusted_slope) > 1:
+        slope = adjusted_slope
+
+        middle_year = (end_year - middle_year) // 2
+        middle_incidents = num_instances_by_year(data, state, middle_year)
+
+        adjusted_slope = (end_incidents - middle_incidents) // (end_year - middle_year)
+
+    return adjusted_slope
+
+
 ###############################################################################
 # Creating the graphs (month)
 ###############################################################################
@@ -191,7 +233,7 @@ def plot_hate_crime_data(data: list[HateCrime], state: str) -> None:
 
 
 ###############################################################################
-# Creating the graphs
+# Creating the graphs (year)
 ###############################################################################
 def get_data_by_year(data: list[HateCrime], state: str) -> dict[int, int]:
     """"Return a dictionary mapping (year, month) tuples to the corresponding number of hate crime
@@ -248,3 +290,5 @@ def plot_hate_crime_year(data: list[HateCrime], state: str) -> None:
                       yaxis_title=f'Calculated {state}')
 
     fig.show()
+
+
