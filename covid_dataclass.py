@@ -1,5 +1,8 @@
-"""The Hidden Correlation Between Covid-19 and Hate Crimes in the United States
+"""
+The Hidden Correlation Between Covid-19 and Hate Crimes in the United States
     From Jessica, Milena and Dian
+
+Creating Covid Dataclasses
 
 Module Description
 ==================
