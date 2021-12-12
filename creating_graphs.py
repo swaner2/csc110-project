@@ -13,7 +13,7 @@ import plotly.graph_objects as go
 # Creating the graphs (month)
 ###############################################################################
 def get_data_by_month(data: list[HateCrime], state: str) -> dict[tuple[int, int], int]:
-    """"Return a dictionary mapping (year, month) tuples to the corresponding number of hate crime
+    """Return a dictionary mapping (year, month) tuples to the corresponding number of hate crime
     incidences in the given state.
 
     Preconditions:
