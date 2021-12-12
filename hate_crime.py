@@ -208,3 +208,14 @@ def calculate_percent_difference(data: List[HateCrime]) -> dict[str, float]:
         percent_difference[state] = (predicted[state] - actual[state]) / actual[state] * 100
 
     return percent_difference
+
+
+def to_csv(data: dict[str, int]) -> None:
+    """Converts dictionary into csv file"""
+    a_file = open("percent_diff.csv", "w")
+
+    writer = csv.writer(a_file)
+    for key, value in data.items():
+        writer.writerow([key, value])
+
+    a_file.close()
