@@ -127,6 +127,8 @@ def predictions(data: List[HateCrime]) -> dict[str, int]:
     for state in states:
         slope = find_best_slope(data, state, 1999, 2019)
         prediction = slope + num_instances_by_year(data, state, 2019)
+        if prediction < 0:
+            prediction = 0
         hate_crime_2020_predictions[state] = prediction
 
     return hate_crime_2020_predictions
