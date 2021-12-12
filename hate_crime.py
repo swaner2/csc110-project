@@ -189,7 +189,7 @@ def instances_in_2020(data: List[HateCrime]) -> dict[str, int]:
     return hate_crime_instances_2020
 
 
-def calculate_percent_difference(data: List[HateCrime]) -> dict[str, float]:
+def calculate_percent_difference(data: List[HateCrime]) -> dict[str, list[float, int, int]]:
     """Return a dictionary mapping the abbreviated state name with the corresponding percent
     difference between the real and predicted hate crime instances in 2020.
 
@@ -205,18 +205,22 @@ def calculate_percent_difference(data: List[HateCrime]) -> dict[str, float]:
               'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
 
     for state in states:
-        percent_difference[state] = (predicted[state] - actual[state]) / actual[state] * 100
+
+        percent_difference[state] = [(predicted[state] - actual[state]) / actual[state] * 100,
+                                     actual[state], predicted[state]]
 
     return percent_difference
 
 
-def to_csv(percent_diff: dict[str, int]) -> None:
+def to_csv(percent_diff: dict[str, list[float, int, int]]) -> None:
     """Converts dictionary into csv file"""
     pd_file = open("percent_diff.csv", "w", newline="")
 
     writer = csv.writer(pd_file)
-    writer.writerow(['State', 'Percent Difference'])
+    writer.writerow(['State', 'Percent Difference', 'Actual', 'Predicted'])
     for key, value in percent_diff.items():
-        writer.writerow([key, value])
+        if key == 'NB':
+            key = 'NE'
+        writer.writerow([key, value[0], value[1], value[2]])
 
     pd_file.close()
