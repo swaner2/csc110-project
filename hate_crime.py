@@ -143,8 +143,8 @@ def predictions(data: List[HateCrime]) -> dict[str, int]:
     for state in STATES:
         slope = find_best_slope(data, state, 1999, 2019)
         prediction = slope + num_instances_by_year(data, state, 2019)
-        if prediction < 0:
-            prediction = 0
+        if prediction < 1:
+            prediction = 1
         hate_crime_2020_predictions[state] = prediction
 
     return hate_crime_2020_predictions
@@ -198,7 +198,7 @@ def calculate_percent_difference(data: List[HateCrime]) -> dict[str, list[float,
     actual = instances_in_2020(data)
 
     for state in STATES:
-        percent_difference[state] = [(predicted[state] - actual[state]) / actual[state] * 100,
+        percent_difference[state] = [(actual[state] - predicted[state]) / predicted[state] * 100,
                                      actual[state], predicted[state]]
 
     return percent_difference
