@@ -38,4 +38,4 @@ def graphs() -> None:
     plot_covid_and_hate_crime(covid_data, hate_crime_data, 'AL')
     # to create the graphs for a different state, replace 'AL' with the string \
     # of the abbreviation of the state you would like to look at. For example, \
-    # Hawaii is a state with interesting trends, to see its graphs, replace 'AL' with 'HI'.
+    # Maryland is another state with interesting trends. To see its graphs, replace 'AL' with 'MD'.
