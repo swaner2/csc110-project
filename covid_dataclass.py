@@ -6,8 +6,8 @@ Creating Covid Dataclasses
 
 Module Description
 ==================
-This module contains functions to transform the raw data about covid cases in the United States into workable dataclasses.
-
+This module contains functions to transform the raw data about covid cases in the United States
+into workable dataclasses.
 """
 import csv
 from dataclasses import dataclass
@@ -17,12 +17,10 @@ import datetime
 @dataclass
 class CovidData:
     """The level of covid cases in a certain time of a certain state.
-
     Instance Attributes:
        - date: the day on which the covid cases were reported
        - state: the US state the data relates to
        - cases: the number of positive covid cases reported in the state on that day
-
     Representation Invariants:
         - (2021, 1, 1) > self.date >= (2020, 1, 1)
         - self.state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', \
@@ -31,7 +29,6 @@ class CovidData:
                          'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', \
                          'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'}
         - self.cases >= 0
-
     """
     date: datetime.date
     state: str
@@ -40,12 +37,9 @@ class CovidData:
 
 def read_csv_file(filename: str) -> list[CovidData]:
     """Process and return the relevant data stored in a csv file with the given filename.
-
     The return value is a list of the data in the file in the form of the dataclass defined above.
-
     Preconditions:
       - filename refers to a valid csv file with headers
-
     """
     with open(filename) as file:
         reader = csv.reader(file)
@@ -60,7 +54,6 @@ def read_csv_file(filename: str) -> list[CovidData]:
 
 def process_row(row: list[str]) -> CovidData:
     """Convert a row of covid case data to a CovidCase dataclass.
-
     """
     (year, month, day) = str.split(row[0], '-')
     date = datetime.date(int(year), int(month), int(day))
@@ -71,11 +64,11 @@ def process_row(row: list[str]) -> CovidData:
         cases = int(row[21])
     return CovidData(date, state, cases)
 
+
 def cases_by_month(covid_data: list[CovidData], month: int, state: str) -> CovidData:
     """Take the dataclasses from the file and combine the cases from for each day to per month.
-
-    The whole month's total covid cases will be represented by the case count on the first day of the month.
-
+    The whole month's total covid cases will be represented by the case count on the first day
+    of the month.
     """
     date = datetime.date(2020, month, 1)
     total_cases = 0
@@ -99,3 +92,18 @@ def processing_data(raw_covid_data: list[CovidData]) -> list[CovidData]:
             list.append(data_by_month, month_total)
     return data_by_month
 
+
+if __name__ == '__main__':
+    import python_ta
+
+    python_ta.check_all(config={
+        'max-line-length': 100,
+        'extra-imports': ['python_ta.contracts', 'csv', 'dataclasses', 'datetime'],
+        'allowed-io': ['read_csv_file'],
+        'disable': ['R1705']
+    })
+
+    import python_ta.contracts
+
+    python_ta.contracts.DEBUG_CONTRACTS = False
+    python_ta.contracts.check_all_contracts()
