@@ -9,6 +9,11 @@ from dataclasses import dataclass
 import datetime
 from typing import List, Tuple
 
+STATES = {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
+          'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV',
+          'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
+          'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
+
 
 @dataclass
 class HateCrime:
@@ -50,9 +55,12 @@ def read_csv_file(filename: str) -> Tuple[List[str], List[HateCrime]]:
     """
     with open(filename) as file:
         reader = csv.reader(file)
-        row = next(reader)
-        headers = [row[0], row[6], row[12]]
+        rows = next(reader)
+        headers = [rows[0], rows[6], rows[12]]
         data = [process_row(row) for row in reader]
+        for instance in data:
+            if instance.state_abbr == 'NB':
+                instance.state_abbr = 'NE'
 
     return (headers, data)
 
@@ -66,8 +74,7 @@ def process_row(row: List[str]) -> HateCrime:
     return HateCrime(
         int(row[0]),
         row[6],
-        str_to_date(row[12])
-        )
+        str_to_date(row[12]))
 
 
 def str_to_date(date_string: str) -> datetime.date:
@@ -94,7 +101,7 @@ def num_instances_by_month(data: List[HateCrime], state: str, year: int, month: 
     Preconditions:
         - state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',\
                     'IN', 'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT',\
-                    'NB', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',\
+                    'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',\
                     'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
         - 1999 <= year <= 2020
         - 1 <= month <= 12
@@ -114,7 +121,7 @@ def num_instances_by_year(data: List[HateCrime], state: str, year: int) -> int:
     Preconditions:
         - state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',\
                     'IN', 'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT',\
-                    'NB', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',\
+                    'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',\
                     'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
         - 1999 <= year <= 2020
     """
@@ -130,14 +137,10 @@ def num_instances_by_year(data: List[HateCrime], state: str, year: int) -> int:
 def predictions(data: List[HateCrime]) -> dict[str, int]:
     """Takes hate crime data and returns a dictionary with the predicted number of hate crime
     incidents in 2020 per state"""
-    states = {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
-              'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT', 'NB', 'NV',
-              'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
-              'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
 
     hate_crime_2020_predictions = {}
 
-    for state in states:
+    for state in STATES:
         slope = find_best_slope(data, state, 1999, 2019)
         prediction = slope + num_instances_by_year(data, state, 2019)
         if prediction < 0:
@@ -178,12 +181,7 @@ def instances_in_2020(data: List[HateCrime]) -> dict[str, int]:
     in 2020."""
     hate_crime_instances_2020 = {}
 
-    states = {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
-              'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT', 'NB', 'NV',
-              'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
-              'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
-
-    for state in states:
+    for state in STATES:
         hate_crime_instances_2020[state] = num_instances_by_year(data, state, 2020)
 
     return hate_crime_instances_2020
@@ -199,13 +197,7 @@ def calculate_percent_difference(data: List[HateCrime]) -> dict[str, list[float,
     predicted = predictions(data)
     actual = instances_in_2020(data)
 
-    states = {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
-              'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT', 'NB', 'NV',
-              'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
-              'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
-
-    for state in states:
-
+    for state in STATES:
         percent_difference[state] = [(predicted[state] - actual[state]) / actual[state] * 100,
                                      actual[state], predicted[state]]
 
@@ -214,13 +206,27 @@ def calculate_percent_difference(data: List[HateCrime]) -> dict[str, list[float,
 
 def to_csv(percent_diff: dict[str, list[float, int, int]]) -> None:
     """Converts dictionary into csv file"""
-    pd_file = open("percent_diff.csv", "w", newline="")
+    with open('percent_diff.csv', 'w', newline='') as pd_file:
 
-    writer = csv.writer(pd_file)
-    writer.writerow(['State', 'Percent Difference', 'Actual', 'Predicted'])
-    for key, value in percent_diff.items():
-        if key == 'NB':
-            key = 'NE'
-        writer.writerow([key, value[0], value[1], value[2]])
+        writer = csv.writer(pd_file)
+        writer.writerow(['State', 'Percent Difference', 'Actual', 'Predicted'])
+        for key, value in percent_diff.items():
 
-    pd_file.close()
+            writer.writerow([key, value[0], value[1], value[2]])
+
+
+if __name__ == '__main__':
+    import python_ta
+
+    python_ta.check_all(config={
+        'max-line-length': 100,
+        'extra-imports': ['python_ta.contracts', 'csv', 'dataclasses', 'datetime',
+                          'typing'],
+        'allowed-io': ['read_csv_file', 'to_csv'],
+        'disable': ['R1705']
+    })
+
+    import python_ta.contracts
+
+    python_ta.contracts.DEBUG_CONTRACTS = False
+    python_ta.contracts.check_all_contracts()
