@@ -5,15 +5,15 @@ Module Description
 ==================
 This module contains the functions to show the total percent change from predicted to actual, in hate crime rate.
 """
-from hate_crime import HateCrime
-from covid_dataclass import CovidData
-
 import plotly.graph_objects as go
 import pandas as pd
 
 
 def make_map() -> None:
-    """Make sample map"""
+     """Make the map showing the correlation between hate crime rate and covid rate by state.
+    States that are more green had a larger increase in hate crime incidence than predicted, 
+    while states that are more red had a larger decrease in hate crime incidence than predicted.
+    States with almost white colours have similar predicted and actual hate crime rates."""
     df = pd.read_csv('percent_diff.csv')
 
     for col in df.columns:
