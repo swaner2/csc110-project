@@ -2,11 +2,11 @@
 
 Module Description
 ==================
-This module contains the data and functions to create the graphs to show the trend of hate crime from 1999-2020.
+This module contains the data and functions to read hate_crime.csv file.
 """
+import plotly.graph_objects as go
 from hate_crime import HateCrime
 import hate_crime as hc
-import plotly.graph_objects as go
 
 
 ###############################################################################
@@ -15,12 +15,11 @@ import plotly.graph_objects as go
 def get_data_by_month(data: list[HateCrime], state: str) -> dict[tuple[int, int], int]:
     """Return a dictionary mapping (year, month) tuples to the corresponding number of hate crime
     incidences in the given state.
-
     Preconditions:
         - state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',\
                     'IN', 'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT',\
-                    'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',\
-                    'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
+                    'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',\
+                    'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
     """
     hate_crime_data = {}
 
@@ -34,7 +33,6 @@ def get_data_by_month(data: list[HateCrime], state: str) -> dict[tuple[int, int]
 def get_xy_coordinates_month(data: list[HateCrime], state: str) -> tuple[list[str], list[int]]:
     """Return a tuple of two parallel lists. The first list the keys of the incidences as strings
     in the format 'year, month'. The second list contains the corresponding value of incidences.
-
     Preconditions:
         - incidences != {}
     """
@@ -55,7 +53,6 @@ def get_xy_coordinates_month(data: list[HateCrime], state: str) -> tuple[list[st
 
 def plot_hate_crime_by_month(data: list[HateCrime], state: str) -> None:
     """Plot hate crime data from a state as a time series.
-
     Preconditions:
         - incidences != {}
     """
@@ -77,12 +74,11 @@ def plot_hate_crime_by_month(data: list[HateCrime], state: str) -> None:
 def get_data_by_year(data: list[HateCrime], state: str) -> dict[int, int]:
     """"Return a dictionary mapping (year, month) tuples to the corresponding number of hate crime
     incidences in the given state.
-
     Preconditions:
         - state in {'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL',\
                     'IN', 'IA', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MS', 'MO', 'MT',\
-                    'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC',\
-                    'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
+                    'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',\
+                    'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WV', 'WI', 'WY'}
     """
     hate_crime_data = {}
 
@@ -95,7 +91,6 @@ def get_data_by_year(data: list[HateCrime], state: str) -> dict[int, int]:
 def get_xy_coordinates_year(data: list[HateCrime], state: str) -> tuple[list[str], list[int]]:
     """Return a tuple of two parallel lists. The first list the keys of the incidences as strings
     in the format 'year, month'. The second list contains the corresponding value of incidences.
-
     Preconditions:
         - incidences != {}
     """
@@ -115,7 +110,6 @@ def get_xy_coordinates_year(data: list[HateCrime], state: str) -> tuple[list[str
 
 def plot_hate_crime_by_year(data: list[HateCrime], state: str) -> None:
     """Plot hate crime data from a state as a time series.
-
     Preconditions:
         - incidences != {}
     """
@@ -129,3 +123,19 @@ def plot_hate_crime_by_year(data: list[HateCrime], state: str) -> None:
                       yaxis_title=f'Calculated {state}')
 
     fig.show()
+
+
+if __name__ == '__main__':
+    import python_ta
+
+    python_ta.check_all(config={
+        'max-line-length': 100,
+        'extra-imports': ['python_ta.contracts', 'hate_crime', 'plotly.graph_objects'],
+        'allowed-io': ['read_csv_file', 'to_csv'],
+        'disable': ['R1705']
+    })
+
+    import python_ta.contracts
+
+    python_ta.contracts.DEBUG_CONTRACTS = False
+    python_ta.contracts.check_all_contracts()
