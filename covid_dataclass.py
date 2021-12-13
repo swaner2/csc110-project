@@ -65,6 +65,9 @@ def process_row(row: list[str]) -> CovidData:
     return CovidData(date, state, cases)
 
 
+###############################################################################
+# Operating on the data
+###############################################################################
 def cases_by_month(covid_data: list[CovidData], month: int, state: str) -> CovidData:
     """Take the dataclasses from the file and combine the cases from for each day to per month.
     The whole month's total covid cases will be represented by the case count on the first day
