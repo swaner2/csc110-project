@@ -1,1 +1,13 @@
+# The Hidden Correlation Between Covid-19 and Hate Crimes in the United States by Jessica, Milena, Dian
+# The Python libraries we used
 
+# Testing and code checking
+hypothesis
+pytest
+python-ta
+
+# Computations
+panda 
+
+# Graphics
+plotly
