@@ -7,7 +7,7 @@ pytest
 python-ta
 
 # Computations
-panda 
+pandas
 
 # Graphics
 plotly
