@@ -2,7 +2,7 @@
 
 Module Description
 ==================
-This module contains the data and functions to read hate_crime.csv file.
+This module contains the data and functions to create the graphs to show the trend of hate crime from 1999-2020.
 """
 from hate_crime import HateCrime
 import hate_crime as hc
