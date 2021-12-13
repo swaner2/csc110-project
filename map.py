@@ -5,7 +5,6 @@ Module Description
 ==================
 This module contains the functions to show the total percent change from predicted to actual, in hate crime rate.
 """
-import plotly.graph_objects as go
 from hate_crime import HateCrime
 from covid_dataclass import CovidData
 
