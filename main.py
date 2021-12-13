@@ -12,7 +12,7 @@ from map import make_map
 from creating_graphs import plot_hate_crime_by_year, plot_hate_crime_by_month
 from covid_to_hate_crime_relationship import plot_covid_and_hate_crime
 
-hate_crime_data = read_csv_file('hate_crime.csv')[1]
+hate_crime_data = read_csv_file('all_states_history.csv')[1]
 covid_data = read_csv_file_covid('covid_data.csv')
 
 
