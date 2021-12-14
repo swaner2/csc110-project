@@ -13,7 +13,7 @@ from creating_graphs import plot_hate_crime_by_year, plot_hate_crime_by_month
 from covid_to_hate_crime_relationship import plot_covid_and_hate_crime
 
 hate_crime_data = read_csv_file('hate_crime.csv')[1]
-covid_data = read_csv_file_covid('all_states_history.csv')
+covid_data = read_csv_file_covid('all-states-history.csv')
 
 
 def run() -> None:
